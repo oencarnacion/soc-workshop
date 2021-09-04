@@ -291,6 +291,115 @@ systemctl enable thehive
 
 MISP es una solución de software de código abierto para recopilar, almacenar, distribuir y compartir indicadores de ciberseguridad y amenazas sobre el análisis de incidentes de ciberseguridad y el análisis de malware. MISP está diseñado por y para analistas de incidentes, profesionales de la seguridad y las TIC o reversores de malware para respaldar sus operaciones diarias para compartir información estructurada de manera eficiente.
 
+~~~
+curl https://raw.githubusercontent.com/TheHive-Project/TheHive/master/PGP-PUBLIC-KEY | sudo apt-key add -
+echo 'deb https://deb.thehive-project.org release main' | sudo tee -a /etc/apt/sources.list.d/thehive-project.list
+sudo apt-get update
+~~~
+
+~~~
+apt install cortex
+~~~
+
+~~~
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+~~~
+
+~~~
+sudo apt install apt-transport-https
+~~~
+
+~~~
+sudo apt update && sudo apt install elasticsearch
+~~~
+
+~~~
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt-get install openjdk-11-jre-headless
+~~~
+
+~~~
+sudo addgroup cortex
+sudo adduser --system cortex
+sudo cp /opt/cortex/package/cortex.service /usr/lib/systemd/system
+sudo chown -R cortex:cortex /opt/cortex
+sudo chgrp cortex /etc/cortex/application.conf
+sudo chmod 640 /etc/cortex/application.conf
+sudo systemctl enable cortex
+sudo service cortex start
+~~~
+
+~~~
+sudo mkdir /etc/cortex
+(cat << _EOF_
+# Secret key
+# ~~~~~
+# The secret key is used to secure cryptographics functions.
+# If you deploy your application to several instances be sure to use the same key!
+play.http.secret.key="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)"
+_EOF_
+) | sudo tee -a /etc/cortex/application.conf
+~~~
+
+~~~
+bin/cortex -Dconfig.file=/etc/cortex/application.conf
+~~~
+
+~~~
+sudo apt-get install -y --no-install-recommends python-pip python2.7-dev python3-pip python3-dev ssdeep libfuzzy-dev libfuzzy2 libimage-exiftool-perl libmagic1 build-essential git libssl-dev
+~~~
+
+~~~
+sudo pip install -U pip setuptools && sudo pip3 install -U pip setuptools
+~~~
+
+~~~
+git clone https://github.com/TheHive-Project/Cortex-Analyzers
+~~~
+
+~~~
+for I in $(find Cortex-Analyzers -name 'requirements.txt'); do sudo -H pip2 install -r $I; done && \
+for I in $(find Cortex-Analyzers -name 'requirements.txt'); do sudo -H pip3 install -r $I || true; done
+~~~
+
+~~~
+analyzer {
+  # Directory that holds analyzers
+  path = [
+    "/path/to/default/analyzers",
+    "/path/to/my/own/analyzers"
+  ]
+
+  fork-join-executor {
+    # Min number of threads available for analyze
+    parallelism-min = 2
+    # Parallelism (threads) ... ceil(available processors * factor)
+    parallelism-factor = 2.0
+    # Max number of threads available for analyze
+    parallelism-max = 4
+  }
+}
+
+responder {
+  # Directory that holds responders
+  path = [
+    "/path/to/default/responder",
+    "/path/to/my/own/responder"
+  ]
+
+  fork-join-executor {
+    # Min number of threads available for analyze
+    parallelism-min = 2
+    # Parallelism (threads) ... ceil(available processors * factor)
+    parallelism-factor = 2.0
+    # Max number of threads available for analyze
+    parallelism-max = 4
+  }
+}
+~~~
+
+
 ## Patrowl
 
 - Patrowl Overview!
