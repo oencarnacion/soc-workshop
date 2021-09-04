@@ -1,2 +1,332 @@
-# soc-workshop
-Centro de operaciones de seguridad
+----
+### WazuhSIEM Overview!
+
+Esta guía de configuración le mostrará cómo configurar su servidor WazuhSIEM, este proceso es simple de completar. En esta configuración usaremos un script para instalar nuestro WazuhSIEM desde cero.
+
+-----------------------
+Nota:
+- Esta compilación se configuró en un XCP-ng 8.0 y las máquinas virtuales funcionan las 24 horas del día, los 7 días de la semana.
+- Ahora, si desea utilizar ese proceso, esta guía de configuración sigue siendo la misma.
+
+-----------------------
+
+
+Estoy tratando de hacer este proceso simple y directo al grano. Para que pueda seguir y volver a crear la misma configuración que he creado.
+
+## Referencias de recursos:
+
+
+Que es Wazuh?
+> https://documentation.wazuh.com/current/index.html
+
+-----------------------
+
+## Software Requerido
+
+- Software de alojamiento
+
+- Ubuntu Server 20.04 LTS **#Opccion 2:**
+> https://ubuntu.com/download/server
+
+- Descarga Directa:
+
+> https://releases.ubuntu.com/20.04.3/ubuntu-20.04.3-live-server-amd64.iso
+
+- El hipervisor que utiliza depende de usted, pero el proceso sigue siendo el mismo.
+- Puede utilizar Linux o Windows para la instalación del hipervisor base.
+
+-----------------------
+- VirtualBox para instalaciones de Windows o Linux
+
+- Oracle VirtualBox 6.1.16 
+> https://www.virtualbox.org/wiki/Downloads
+
+- Oracle VirtualBox Paquete de extensión para invitados
+> https://download.virtualbox.org/virtualbox/6.1.16/Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack
+
+-----------------------
+- VMware para instalaciones de Windows o Linux
+
+- VMware Workstation 16.1.0 Player Free 
+> https://my.vmware.com/en/web/vmware/downloads/details?downloadGroup=PLAYER-1610&productId=1039&rPId=55792
+
+Estos dos son opcionales a continuación.
+Necesitará hardware físico para instalar.
+
+- XCP-ng
+> https://mirrors.xcp-ng.org/isos/8.2/xcp-ng-8.2.0.iso?https=1
+
+
+## Módulo de instalación de Wazuh
+
+- Wazuh Overview!
+
+Wazuh proporciona una solución de seguridad capaz de monitorear su infraestructura, detectar amenazas, intentos de intrusión, anomalías del sistema, aplicaciones mal configuradas y acciones de usuarios no autorizados. También proporciona un marco para la respuesta a incidentes y el cumplimiento normativo.
+
+- Fuente:
+
+> https://wazuh.com/product/
+
+
+## Instalacion de Wazuh Server & Agent!
+
+Esta será una implementación de nodo único de **Wazuh.**
+
+#### All-in-one deployment
+
+> https://documentation.wazuh.com/current/installation-guide/open-distro/all-in-one-deployment/index.html#all-in-one-index
+
+
+![](https://github.com/watsoninfosec/WazuhSIEM/blob/main/Deployment/images/overview.png)
+
+
+Primero, tomemos el archivo de configuración que necesitaremos Instalar **Wazuh**.
+
+Nota: Se requieren privilegios de usuario root para ejecutar todos los comandos que se describen a continuación. Para descargar el script se utilizará el paquete ** curl **.
+
+- Obtenga acceso root:
+
+~~~
+sudo su
+~~~
+
+- Instalacion de Wazuh:
+
+~~~
+curl -so ~/all-in-one-installation.sh https://raw.githubusercontent.com/wazuh/wazuh-documentation/4.1/resources/elastic-stack/unattended-installation/all-in-one-installation.sh && bash ~/all-in-one-installation.sh
+~~~
+
+Ahora bien, este proceso en un **Unattended installation**
+
+- Una vez que ese script se esté ejecutando, debería ver algo como esto:
+
+### Wazuh Server Salida:
+
+~~~
+ The password for wazuh is vhDpq7YcwA08BLTmcdeYeJmXPU_VD31f
+
+ The password for admin is uLo9SBKCE80B8OSE8zNbOWlVvHlOjQ00
+
+ The password for kibanaserver is -A452dUzB8gnk3ed7nSuci_kNiSZ0y6z
+
+ The password for kibanaro is yyNBlV28VzJHKnYVPNLgoAEssgics9d4
+
+ The password for logstash is Hm86wUT7paLDPNhtq-I6Q1H8Weh7tX-g
+
+ The password for readall is ZDqyYqvV5moE60k_X5580-4US6CIjBmi
+
+ The password for snapshotrestore is FCHX-YhCV_o6IE8x_AA6lFQsjzlmCVe7
+
+ The password for wazuh_admin is rkDgTQEnyw8Li3hYXfhD9td-voCw1awm
+
+ The password for wazuh_user is _9JE9cY2nMWdR5GRb_Gda8ikrRRvsASH
+
+ Checking the installation...
+ Elasticsearch installation succeeded.
+ Filebeat installation succeeded.
+ Initializing Kibana (this may take a while)
+ .
+ Installation finished
+
+ You can access the web interface https://<kibana_ip>. The credentials are wazuh:vhDpq7YcwA08BLTmcdeYeJmXPU_VD31f
+ ~~~
+
+Ahora copie estas contraseñas de arriba y guárdelas, las necesitará para obtener acceso al panel del servidor.
+
+- Ahora puede acceder a su panel de control desde la dirección IP que creó:
+
+~~~
+Puede acceder a la interfaz web https://<kibana_ip>.
+~~~
+
+- Ves una advertencia como esta:
+
+![](https://github.com/watsoninfosec/WazuhSIEM/blob/main/Deployment/images/warning.png)
+
+Acepte la advertencia haciendo clic en Avanzado, luego Acepte el Riesgo y continúe a la pantalla de inicio de sesión.
+
+### Pantalla de ingreso al sistema:
+![](https://github.com/watsoninfosec/WazuhSIEM/blob/main/Deployment/images/elastic.png)
+
+- Now login in with your **elastic** username and password: **v3gJLYItKkxuYmunES5T**
+
+### Wazuh Dashboard:
+![](https://github.com/watsoninfosec/WazuhSIEM/blob/main/Deployment/images/wazuh.png)
+
+### Listo!
+
+Ahora tiene su nuevo **Wazuh Server** configurado y en funcionamiento.
+Tómate un tiempo para explorar y echar un vistazo a tu nuevo **WazuhSIEM.**
+
+## MISP Threat Sharing
+
+- MISP Overview!
+
+MISP es una solución de software de código abierto para recopilar, almacenar, distribuir y compartir indicadores de ciberseguridad y amenazas sobre el análisis de incidentes de ciberseguridad y el análisis de malware. MISP está diseñado por y para analistas de incidentes, profesionales de la seguridad y las TIC o reversores de malware para respaldar sus operaciones diarias para compartir información estructurada de manera eficiente.
+
+- Source:
+
+> https://www.circl.lu/services/misp-malware-information-sharing-platform/
+
+
+## Instalando MISP!
+
+~~~
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get install mysql-client  -y
+wget https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+chmod +x INSTALL.sh
+./INSTALL.sh -A
+~~~
+
+~~~
+Puede acceder a la interfaz web https://<misp_ip>.
+~~~
+
+- Ves una advertencia como esta:
+
+![](https://github.com/watsoninfosec/WazuhSIEM/blob/main/Deployment/images/warning.png)
+
+Acepte la advertencia haciendo clic en Avanzado, luego Acepte el Riesgo y continúe a la pantalla de inicio de sesión.
+
+### Pantalla de ingreso al sistema:
+![](https://github.com/watsoninfosec/WazuhSIEM/blob/main/Deployment/images/elastic.png)
+
+- Now login in with your default credentials **admin@admin.test** username and password: **admin**
+
+### Listo!
+
+Ahora tiene su nuevo **MISP Server** configurado y en funcionamiento.
+Tómate un tiempo para explorar y echar un vistazo a tu nuevo **MISP Server.**
+
+## TheHive
+
+- TheHive Overview!
+
+MISP es una solución de software de código abierto para recopilar, almacenar, distribuir y compartir indicadores de ciberseguridad y amenazas sobre el análisis de incidentes de ciberseguridad y el análisis de malware. MISP está diseñado por y para analistas de incidentes, profesionales de la seguridad y las TIC o reversores de malware para respaldar sus operaciones diarias para compartir información estructurada de manera eficiente.
+
+~~~
+sudo apt-get install -y openjdk-8-jre-headless
+sudo echo JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64" >> /etc/environment
+sudo export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+curl -fsSL https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+sudo apt update -y
+sudo apt install cassandra -y
+~~~
+
+~~~
+UPDATE system.local SET cluster_name = 'thp' where key='local';
+exit
+~~~
+
+~~~
+nodetool flush
+~~~
+
+~~~
+cluster_name: 'thp'
+listen_address: 'localhost' # address for nodes
+rpc_address: 'localhost' # address for clients
+seed_provider:
+    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+      parameters:
+          - seeds: 'localhost' # self for the first node
+data_file_directories:
+  - '/var/lib/cassandra/data'
+commitlog_directory: '/var/lib/cassandra/commitlog'
+saved_caches_directory: '/var/lib/cassandra/saved_caches'
+hints_directory: '/var/lib/cassandra/hints'
+~~~
+
+~~~
+sudo systemctl start cassandra
+sudo systemctl enable cassandra
+sudo mkdir -p /opt/thp_data/files/thehive
+sudo chown -R thehive:thehive /opt/thp_data/files/thehive
+~~~
+
+~~~
+netstat -an | grep 7000
+~~~
+
+~~~
+curl https://raw.githubusercontent.com/TheHive-Project/TheHive/master/PGP-PUBLIC-KEY | sudo apt-key add -
+echo 'deb https://deb.thehive-project.org beta main' | sudo tee -a /etc/apt/sources.list.d/thehive-project.list
+sudo apt-get update
+sudo apt-get install thehive4 -y
+~~~
+
+~~~
+db.janusgraph {
+  storage {
+    backend: cql
+    hostname: ["127.0.0.1"]
+    cql {
+      cluster-name: thp
+      keyspace: thehive
+    }
+  }
+}
+~~~
+
+~~~
+storage {
+  provider: localfs
+  localfs.directory: /opt/thp_data/files/thehive
+}
+~~~
+
+~~~
+systemctl start thehive
+~~~
+
+~~~
+systemctl enable thehive
+~~~
+
+## Cortex
+
+- Cortex Overview!
+
+MISP es una solución de software de código abierto para recopilar, almacenar, distribuir y compartir indicadores de ciberseguridad y amenazas sobre el análisis de incidentes de ciberseguridad y el análisis de malware. MISP está diseñado por y para analistas de incidentes, profesionales de la seguridad y las TIC o reversores de malware para respaldar sus operaciones diarias para compartir información estructurada de manera eficiente.
+
+## Patrowl
+
+- Patrowl Overview!
+
+----
+
+PatrOwl es una solución escalable, gratuita y de código abierto para orquestar operaciones de seguridad.
+
+**PatrowlManager** es la aplicación Front-end para administrar los activos, revisar los riesgos en tiempo real, orquestar las operaciones (escaneos, búsquedas, llamadas a API, ...), agregar los resultados, transmitir alertas a terceros (p. Ej., Plataforma de respuesta a incidentes). como TheHive, SIEM, ...) y proporcionando los informes y cuadros de mando.
+**PatrowlEngines** es el marco del motor y la lista admitida de motores que realizan las operaciones (escaneos, búsquedas, llamadas a API, ...) a su debido tiempo.
+
+----
+
+## Hardware Pre-requisitos
+Patrowl Manager usa PostgreSQL para almacenar datos. Recomendamos utilizar una máquina virtual con al menos 4 vCPU, 8 GB de RAM y 60 GB de disco. También puede utilizar una máquina física con especificaciones similares.
+
+### Instalar e implementar Backend desde Docker
+#### 1. Instalar los requisitos previos del sistema
+Instalacion de Docker:
++ [Docker and Docker-Compose](https://docs.docker.com/install/)
+
+#### 2. Descarga PatrowlManager de GitHub
+```
+git clone https://github.com/Patrowl/PatrowlManager.git
+```
+#### 3. Implemente el backend usando docker-compose
+```
+cd PatrowlManager
+docker-compose build --force-rm
+docker-compose up
+```
+> Nota 1: El volumen persistente no está establecido en la configuración de base de datos predeterminada. Actívelo si es necesario (¡debería serlo!). Ajústelo en el archivo `docker-compose.yml`
+
+> Nota 2: ¿Quieres motores preconfigurados? Ejecute `docker-compose -f docker-compose.with-engines.yml up` en su lugar   
+
+#### 4. Use esto:
+
+> Ir a http://ip_patrowl:8083/ e iniciar sesión con las credenciales de administrador predeterminadas: **admin/Bonjour1!**
+
