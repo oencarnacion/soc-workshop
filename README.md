@@ -212,7 +212,7 @@ Puede acceder a la interfaz web https://<misp_ip>.
 Acepte la advertencia haciendo clic en Avanzado, luego Acepte el Riesgo y continúe a la pantalla de inicio de sesión.
 
 ### Pantalla de ingreso al sistema:
-![](https://github.com/watsoninfosec/WazuhSIEM/blob/main/Deployment/images/elastic.png)
+![e83ca3e2-9b9f-4e7e-8266-2f15311fbee6](https://user-images.githubusercontent.com/87453279/133007437-06d62d36-4bad-4982-a9e6-a3d2afca7960.png)
 
 - Now login in with your default credentials **admin@admin.test** username and password: **admin**
 
