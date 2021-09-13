@@ -307,6 +307,10 @@ systemctl start thehive
 systemctl enable thehive
 ~~~
 
+
+![thehive](https://user-images.githubusercontent.com/87453279/133007558-0d962857-5244-494f-a46c-66798ed16a73.png)
+
+
 ## Cortex
 
 - Cortex Overview!
@@ -420,6 +424,11 @@ responder {
   }
 }
 ~~~
+
+![cortex](https://user-images.githubusercontent.com/87453279/133007557-ccc79e8e-653a-4016-81a9-4d94c3709f57.png)
+
+![analizer](https://user-images.githubusercontent.com/87453279/133007556-4c6ae266-75f2-44b7-bd82-39e5e1188446.png)
+
 
 
 ## Patrowl
