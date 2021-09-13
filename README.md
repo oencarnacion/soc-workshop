@@ -461,6 +461,18 @@ docker-compose up
 
 > Ir a http://ip_patrowl:8083/ e iniciar sesión con las credenciales de administrador predeterminadas: **admin/Bonjour1!**
 
+### 5. Desplegar algunos de los engines
+
+docker run -d -p 5005:5005 --name="arachni-docker-001" patrowl-arachni
+docker run -d -p 5009:5009 --name="cortex-docker-002" patrowl-cortex
+docker run -d -p 5021:5021 --name="droopescan-docker-003" patrowl-droopescan
+docker run -d -p 5018:5018 --name="eyewitness-docker-004" patrowl-eyewitness
+docker run -d -p 5001:5001 --name="nmap-docker-005" patrowl-nmap
+docker run -d -p 5004:5004 --name="ssllabs-docker-006" patrowl-ssllabs
+docker run -d -p 5014:5014 --name="sslscan-docker-007" patrowl-sslscan
+docker run -d -p 5008:5008 --name="urlvoid-docker-008" patrowl-urlvoid
+docker run -d -p 5022:5022 --name="apivoid-docker-009" patrowl-apivoid
+docker run -d -p 5017:5017 --name="certstream-docker-010" patrowl-certstream
 
 
 ### Orquestacion!
