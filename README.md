@@ -11,11 +11,6 @@
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explora la guia »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">Ver Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Reporta un Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Solicitar función</a>
   </p>
 </p>
 
